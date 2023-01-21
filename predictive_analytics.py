@@ -11,6 +11,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.svm import SVR
 from sklearn.tree import DecisionTreeRegressor
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import r2_score
 
 import matplotlib.pyplot as plt
@@ -171,7 +172,6 @@ sc = StandardScaler()
 X_train = sc.fit_transform(X_train.astype(float))
 X_test= sc.transform(X_test.astype(float))
 
-
 #fit model
 dt = dt.fit(X_train,y_train.values.ravel())
 y_train_pred = dt.predict(X_train)
@@ -181,5 +181,3 @@ y_test_pred = dt.predict(X_test)
 print('dt train score %.3f, dt test score: %.3f' % (
 dt.score(X_train,y_train),
 dt.score(X_test, y_test)))
-
-
