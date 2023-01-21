@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 data = pd.read_csv("./Datasets/insurance.csv")
 print(data.head(15))
 
-############################################01_03_HandlingMissingValues###################################################
+############################################   Handling Missing Values   ###################################################
 #check for how many missing values
 count_nan = data.isnull().sum()
 print(count_nan[count_nan>0])
@@ -27,7 +27,7 @@ count_nan = data.isnull().sum()
 print(count_nan[count_nan>0])
 
 
-############################################01_04_ConvertCategoricalDataintoNumbers##############################################
+############################################  Convert Categorical Data to Numbers  ##############################################
 #create array for label encodoing (sklearn)
 sex = data.iloc[:,1:2].values
 smoker = data.iloc[:,4:5].values
@@ -66,7 +66,7 @@ region.columns = ['northeast', 'northwest', 'southeast', 'southwest']
 print("Sklearn one hot encoder results for region:")  
 print(region[:10])
 
-############################################01_05_DividingtheDataintoTestandTrain##############################################
+############################################  Dividing the data to test and train  ##############################################
 
 #putting the data together:
 
@@ -82,3 +82,16 @@ y_final = data[['charges']].copy()
 #Test train split
 X_train, X_test, y_train, y_test = train_test_split(X_final, y_final, test_size = 0.33, random_state = 0 )
 #X_train, X_test, y_train, y_test = train_test_split(data[['age']], y_final, test_size = 0.33, random_state = 0 )
+
+############################################ Feature Scaling ##############################################
+
+###normalized scaler (fit transform on train, fit only on test)
+#n_scaler = MinMaxScaler()
+#X_train = n_scaler.fit_transform(X_train.astype(np.float))
+#X_test= n_scaler.transform(X_test.astype(np.float))
+
+
+#standard scaler (fit transform on train, fit only on test)
+s_scaler = StandardScaler()
+X_train = s_scaler.fit_transform(X_train.astype(float))
+X_test= s_scaler.transform(X_test.astype(float))
