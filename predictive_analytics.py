@@ -8,7 +8,9 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import LabelEncoder
 from sklearn.linear_model import LinearRegression
-
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.svm import SVR
+from sklearn.metrics import r2_score
 
 import matplotlib.pyplot as plt
 
@@ -110,3 +112,26 @@ print("lr.intercept_: {}".format(lr.intercept_))
 print('lr train score %.3f, lr test score: %.3f' % (
 lr.score(X_train,y_train),
 lr.score(X_test, y_test)))
+
+############################################  Polynomial Regression  ##############################################
+
+poly = PolynomialFeatures (degree = 2)
+X_poly = poly.fit_transform(X_final)
+
+X_train,X_test,y_train,y_test = train_test_split(X_poly,y_final, test_size = 0.33, random_state = 0)
+
+#standard scaler (fit transform on train, fit only on test)
+sc = StandardScaler()
+X_train = sc.fit_transform(X_train.astype(float))
+X_test= sc.transform(X_test.astype(float))
+
+#fit model
+poly_lr = LinearRegression().fit(X_train,y_train)
+
+y_train_pred = poly_lr.predict(X_train)
+y_test_pred = poly_lr.predict(X_test)
+
+#print score
+print('poly train score %.3f, poly test score: %.3f' % (
+poly_lr.score(X_train,y_train),
+poly_lr.score(X_test, y_test)))
