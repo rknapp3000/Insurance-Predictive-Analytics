@@ -10,6 +10,7 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.svm import SVR
+from sklearn.tree import DecisionTreeRegressor
 from sklearn.metrics import r2_score
 
 import matplotlib.pyplot as plt
@@ -135,3 +136,50 @@ y_test_pred = poly_lr.predict(X_test)
 print('poly train score %.3f, poly test score: %.3f' % (
 poly_lr.score(X_train,y_train),
 poly_lr.score(X_test, y_test)))
+
+############################################  Support Vector Regression  ##############################################
+
+svr = SVR(kernel='linear', C = 300)
+
+#test train split
+X_train, X_test, y_train, y_test = train_test_split(X_final, y_final, test_size = 0.33, random_state = 0 )
+
+#standard scaler (fit transform on train, fit only on test)
+sc = StandardScaler()
+X_train = sc.fit_transform(X_train.astype(float))
+X_test= sc.transform(X_test.astype(float))
+
+#fit model
+svr = svr.fit(X_train,y_train.values.ravel())
+y_train_pred = svr.predict(X_train)
+y_test_pred = svr.predict(X_test)
+
+#print score
+print('svr train score %.3f, svr test score: %.3f' % (
+svr.score(X_train,y_train),
+svr.score(X_test, y_test)))
+
+############################################  Decision Tree  ##############################################
+
+dt = DecisionTreeRegressor(random_state=0)
+
+#test train split
+X_train, X_test, y_train, y_test = train_test_split(X_final, y_final, test_size = 0.33, random_state = 0 )
+
+#standard scaler (fit transform on train, fit only on test)
+sc = StandardScaler()
+X_train = sc.fit_transform(X_train.astype(float))
+X_test= sc.transform(X_test.astype(float))
+
+
+#fit model
+dt = dt.fit(X_train,y_train.values.ravel())
+y_train_pred = dt.predict(X_train)
+y_test_pred = dt.predict(X_test)
+
+#print score
+print('dt train score %.3f, dt test score: %.3f' % (
+dt.score(X_train,y_train),
+dt.score(X_test, y_test)))
+
+
