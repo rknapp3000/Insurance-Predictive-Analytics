@@ -7,6 +7,7 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import LabelEncoder
+from sklearn.linear_model import LinearRegression
 
 
 import matplotlib.pyplot as plt
@@ -95,3 +96,17 @@ X_train, X_test, y_train, y_test = train_test_split(X_final, y_final, test_size 
 s_scaler = StandardScaler()
 X_train = s_scaler.fit_transform(X_train.astype(float))
 X_test= s_scaler.transform(X_test.astype(float))
+
+
+############################################  Linear Regression ##############################################
+
+lr = LinearRegression().fit(X_train,y_train)
+y_train_pred = lr.predict(X_train)
+y_test_pred = lr.predict(X_test)
+
+#print score
+print("lr.coef_: {}".format(lr.coef_))
+print("lr.intercept_: {}".format(lr.intercept_))
+print('lr train score %.3f, lr test score: %.3f' % (
+lr.score(X_train,y_train),
+lr.score(X_test, y_test)))
